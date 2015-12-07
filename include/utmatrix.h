@@ -62,6 +62,10 @@ public:
 template <class ValType>
 TVector<ValType>::TVector(int s, int si)
 {
+	if (s > MAX_MATRIX_SIZE)
+		throw "MATRIX_SIZE_OVERFLOW";
+	if (si < 0)
+		throw "NEGATIVE_START_INDEX";
 	pVector = new ValType[s];
 	Size = s;
 	StartIndex = si;
@@ -87,6 +91,8 @@ TVector<ValType>::~TVector()
 template <class ValType> // доступ
 ValType& TVector<ValType>::operator[](int pos)
 {
+	if (pos - StartIndex < 0 || pos - StartIndex > Size)
+		throw "INCORRECT_INDEX";
 	return pVector[pos - StartIndex];
 } /*-------------------------------------------------------------------------*/
 
@@ -163,6 +169,8 @@ TVector<ValType> TVector<ValType>::operator*(const ValType &val)
 template <class ValType> // сложение
 TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 {
+	if (Size != v.Size)
+		throw "SIZE_MISMATCH";
 	TVector tmp(Size, StartIndex);
 	for (int i = 0; i < Size; i++)
 		tmp.pVector[i] = pVector[i] + v.pVector[i];
@@ -172,6 +180,8 @@ TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 template <class ValType> // вычитание
 TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 {
+	if (Size != v.Size)
+		throw "SIZE_MISMATCH";
 	TVector tmp(Size, StartIndex);
 	for (int i = 0; i < Size; i++)
 		tmp.pVector[i] = pVector[i] - v.pVector[i];
