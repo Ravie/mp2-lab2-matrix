@@ -29,3 +29,13 @@
 *.exe
 *.out
 *.app
+
+*.suo
+*.sdf
+*.log
+*.tlog
+*.pdb
+*.idb
+*.opensdf
+*.ilk
+*.cache
